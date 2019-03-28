@@ -1,2 +1,2 @@
-# gtd
+# GTD
 Cracking the Google Tech Dev
