@@ -1,0 +1,22 @@
+2019/05/27
+
+set debuger mode:
+    export FLASK_DEBUG=1
+
+url routing:
+    1. variable using:
+     /x/<variable_name>
+     /x/<converter(e.g. int):variable_name>
+
+    2. rules:
+     /projects/ == /projects/ or /projects, (think of projects as a folder)
+
+     /about == /about only, trying to access /about/ leads to 404, (imagine that 'about' is a file)
+    
+url building:
+    use 'url_for(method_name, [arguments])' to get the routing url of method:'method_name' 
+
+HTTP methods:
+    @app.route('/', methods=['GET', 'POST'])
+
+    condition [request.method == 'post'] won't work as 'post' must be capitalized to 'POST'
