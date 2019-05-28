@@ -21,3 +21,11 @@ def show_post(post_id):
 @app.route('/path/<path:subpath>')
 def show_subpath(subpath):
     return 'Subpath {}'.format(subpath)
+
+@app.route('/projects/')
+def projects():
+    return 'The project page'
+
+@app.route('/about')
+def about():
+    return 'about page'
