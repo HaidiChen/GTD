@@ -20,3 +20,22 @@ HTTP methods:
     @app.route('/', methods=['GET', 'POST'])
 
     condition [request.method == 'post'] won't work as 'post' must be capitalized to 'POST'
+
+
+2019/05/28
+
+template rendering: for html files
+
+request object:
+    'method' attribute for request method(POST or GET), e.g. if request.method == 'GET'
+    'form' attribute retrieves form data, e.g. request.form['username']
+    'args' attribute accesses the parameters in URL, e.g. request.args.get('key','')
+    'files' attribute handles uploaded files, e.g. request.files['the_file']
+    'cookies' attribute deals with cookies (OF COURSE!), e.g. request.cookies.get('key')
+
+Redirects and Errors:
+    redirect(url_for('function_name')) redirects the URL
+    abort(401) aborts the request early
+    @app.errorhandler(404), can return rendered error page instead of the default one.
+
+status code 302: redirect
