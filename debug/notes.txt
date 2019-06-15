@@ -39,3 +39,20 @@ Redirects and Errors:
     @app.errorhandler(404), can return rendered error page instead of the default one.
 
 status code 302: redirect
+
+2019/06/14
+
+not quite clear and understand what output fields does.
+
+a flask application usually needs a project structure including three parts(the routes, the resources and any common infrastructure) like this:
+
+myapi/
+    __init__.py
+    app.py 	# the file contains the app and routes
+    resources/
+        __init__.py
+        foo.py  # contains the logic fro /foo
+        bar.py  $ contains the logic for /bar
+    common/
+        __init__.py
+        util.py    # some common infrastructure
