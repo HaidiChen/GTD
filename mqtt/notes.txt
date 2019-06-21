@@ -1,0 +1,2 @@
+the NO. of messages one can publish is limited to 10 by default
+if the qos>=1, to infinitely publish messages, set the qos=0
