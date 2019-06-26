@@ -105,3 +105,4 @@ def detect(ImagePath):
             cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
                     0.5, color, 2)
 
+    cv2.imwrite(ImagePath, image)
