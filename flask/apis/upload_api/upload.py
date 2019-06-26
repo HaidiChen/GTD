@@ -22,6 +22,8 @@ def expose():
 
         return resp
 
+    return "nothing here."
+
 @app.route('/upload', methods = ['POST'])
 def upload():
     if 'file' not in request.files:

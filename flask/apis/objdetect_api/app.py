@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] =  UPLOAD_FOLDER
 
 @app.route('/detect', methods = ['POST'])
-def detect():
+def obj_detect():
     if 'file' not in request.files:
         return 'no image file uploaded'
 
@@ -28,7 +28,7 @@ def detect():
     resp = send_from_directory(UPLOAD_FOLDER, fn)
     resp.headers['filename'] = fn
 
-    os.remove(imagePath)
+#    os.remove(imagePath)
 
     return resp
 
