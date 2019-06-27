@@ -5,9 +5,14 @@ import os
 from yolo import detect
 
 UPLOAD_FOLDER = 'images/'
+ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] =  UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/detect', methods = ['POST'])
 def obj_detect():
@@ -17,20 +22,24 @@ def obj_detect():
     File = request.files['file']
 
     # can check extension here before detecting
-    # check_extension(file)
+    if File.filename == '':
+        return 'no file name provided'
 
-    fn = secure_filename(File.filename)
-    File.save(os.path.join(app.config['UPLOAD_FOLDER'], fn))
+    if File and allowed_file(File.filename):
+        fn = secure_filename(File.filename)
+        File.save(os.path.join(app.config['UPLOAD_FOLDER'], fn))
 
-    imagePath = os.path.join(app.config['UPLOAD_FOLDER'], fn)
-    detect(imagePath)
+        imagePath = os.path.join(app.config['UPLOAD_FOLDER'], fn)
+        detect(imagePath)
 
-    resp = send_from_directory(UPLOAD_FOLDER, fn)
-    resp.headers['filename'] = fn
+        resp = send_from_directory(UPLOAD_FOLDER, fn)
+        resp.headers['filename'] = fn
 
-#    os.remove(imagePath)
+#       os.remove(imagePath)
 
-    return resp
+        return resp
+    else:
+        return 'file type is not supported'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
