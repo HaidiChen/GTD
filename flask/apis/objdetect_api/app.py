@@ -3,6 +3,7 @@ from flask import request
 from werkzeug.utils import secure_filename
 import os
 from yolo import detect
+from stitch import stitch
 
 UPLOAD_FOLDER = 'images/'
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
@@ -35,11 +36,44 @@ def obj_detect():
         resp = send_from_directory(UPLOAD_FOLDER, fn)
         resp.headers['filename'] = fn
 
-#       os.remove(imagePath)
+#        os.remove(imagePath)
 
         return resp
     else:
         return 'file type is not supported'
+
+@app.route('/stitch', methods = ['POST'])
+def img_stitch():
+    STITCH_FOLDER = 'stitch/'
+
+    if 'file' not in request.files:
+        return 'no images uploaded'
+
+    File = request.files.getlist('file')
+
+    if any(f.filename == '' for f in File):
+        return 'file name needed'
+
+    for file in File:
+        if allowed_file(file.filename):
+            fn = secure_filename(file.filename)
+            file.save(os.path.join(STITCH_FOLDER, fn))
+            
+    img_extension = os.listdir(STITCH_FOLDER)[0].rsplit('.', 1)[1]
+    output = STITCH_FOLDER + 'result.' + img_extension
+
+    if stitch(STITCH_FOLDER, output):
+        resp = send_from_directory(STITCH_FOLDER, 'result.' + img_extension)
+        resp.headers['filename'] = fn
+
+#        os.remove(output)
+        files = os.listdir(STITCH_FOLDER)
+        for file in files:
+            os.remove(STITCH_FOLDER + file)
+
+        return resp
+    else:
+        return 'stitching failed'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
