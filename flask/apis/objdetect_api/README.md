@@ -22,6 +22,11 @@ $ bash run.sh
 
 $ curl -F "file=@<img_path>" http://Service_IP_Address:5000/detect -X POST --output result.<img_ext>
 
+3. change the url for image stitching request. command is like following.
+Assume that the stitching succeeded, otherwise it returns a message saying 'stitching failed'
+
+$ curl -F 'file=@<img1_path>' -F 'file=@<img2_path>' ... http://Address:5000/stitch -X POST --output result.<img_ext>
+
 # DISCOVERY
 this object detection algorithm seems having trouble detecting puppies.
 I tried to detect the puppy using the image below but it detected nothing.
