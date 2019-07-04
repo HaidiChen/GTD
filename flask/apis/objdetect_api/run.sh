@@ -7,6 +7,13 @@ else
 	mkdir images
 fi
 
+if [ -d 'stitch' ]
+then
+	echo 'directory exist'
+else
+	mkdir stitch
+fi
+
 if [ -e 'yolo-coco/yolov3.weights' ]
 then
 		echo 'service ready'
