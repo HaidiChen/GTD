@@ -51,7 +51,7 @@ myapi/
     app.py 	# the file contains the app and routes
     resources/
         __init__.py
-        foo.py  # contains the logic fro /foo
+        foo.py  # contains the logic for /foo
         bar.py  $ contains the logic for /bar
     common/
         __init__.py
