@@ -36,7 +36,7 @@ def obj_detect():
         resp = send_from_directory(UPLOAD_FOLDER, fn)
         resp.headers['filename'] = fn
 
-#        os.remove(imagePath)
+        os.remove(imagePath)
 
         return resp
     else:
@@ -74,6 +74,33 @@ def img_stitch():
         return resp
     else:
         return 'stitching failed'
+
+@app.route('/upload', methods = ['POST'])
+def upload():
+    if 'file' not in request.files:
+        return 'no file uploaded'
+
+    File = request.files['file']
+    fn = secure_filename(File.filename)
+    File.save(os.path.join(app.config['UPLOAD_FOLDER'], fn))
+
+    return 'uploaded'
+
+@app.route('/view')
+def expose():
+    path = UPLOAD_FOLDER
+    fileList = os.listdir(path)
+    if len(fileList) > 0:
+        fname = fileList[0]
+
+        resp = send_from_directory(path, fname)
+        resp.headers['filename'] = fname
+
+        os.remove(path + fname)
+
+        return resp
+
+    return "nothing here."
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
