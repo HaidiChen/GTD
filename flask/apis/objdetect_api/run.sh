@@ -19,8 +19,10 @@ then
 		echo 'service ready'
 else
 		echo '!! Cannot find file: yolo-coco/yolov3.weights !!'
-		echo 'Service ABORTED'
-		exit 1
+        echo 'downloading yolov3.weights......'
+        cd yolo-coco
+        wget https://pjreddie.com/media/files/yolov3.weights
+        cd ..
 fi
 
 python3 app.py
